@@ -1,0 +1,63 @@
+{
+  "name": "Starboard",
+  "type": "object",
+  "properties": {
+    "server_id": {
+      "type": "string"
+    },
+    "channel_id": {
+      "type": "string"
+    },
+    "starboard_channel_id": {
+      "type": "string"
+    },
+    "message_id": {
+      "type": "string"
+    },
+    "author_username": {
+      "type": "string"
+    },
+    "content": {
+      "type": "string"
+    },
+    "attachment_url": {
+      "type": "string"
+    },
+    "star_count": {
+      "type": "number",
+      "default": 0
+    },
+    "star_users": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "default": []
+    },
+    "threshold": {
+      "type": "number",
+      "default": 5
+    },
+    "starboard_message_id": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "server_id",
+    "message_id"
+  ],
+  "rls": {
+    "read": {},
+    "create": {
+      "created_by_id": "{{user.id}}"
+    },
+    "update": {
+      "created_by_id": "{{user.id}}"
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

@@ -1,0 +1,78 @@
+{
+  "name": "Quest",
+  "type": "object",
+  "properties": {
+    "quest_type": {
+      "type": "string",
+      "enum": [
+        "daily",
+        "weekly",
+        "achievement"
+      ],
+      "default": "daily"
+    },
+    "title": {
+      "type": "string"
+    },
+    "description": {
+      "type": "string"
+    },
+    "goal": {
+      "type": "number",
+      "default": 1
+    },
+    "metric": {
+      "type": "string",
+      "enum": [
+        "messages",
+        "games_won",
+        "friends_added",
+        "voice_joined",
+        "coins_earned"
+      ],
+      "default": "messages"
+    },
+    "reward_that": {
+      "type": "number",
+      "default": 10
+    },
+    "icon": {
+      "type": "string",
+      "default": "\ud83c\udfaf"
+    },
+    "seasonal": {
+      "type": "boolean",
+      "default": false
+    },
+    "season_name": {
+      "type": "string"
+    },
+    "enabled": {
+      "type": "boolean",
+      "default": true
+    }
+  },
+  "required": [
+    "quest_type",
+    "title",
+    "metric"
+  ],
+  "rls": {
+    "read": {},
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

@@ -1,0 +1,46 @@
+{
+  "name": "MessageBookmark",
+  "type": "object",
+  "properties": {
+    "message_id": {
+      "type": "string"
+    },
+    "message_type": {
+      "type": "string",
+      "enum": [
+        "channel",
+        "dm"
+      ]
+    },
+    "content_snapshot": {
+      "type": "string"
+    },
+    "channel_id": {
+      "type": "string"
+    },
+    "server_id": {
+      "type": "string"
+    },
+    "folder": {
+      "type": "string",
+      "default": "default"
+    }
+  },
+  "required": [
+    "message_id"
+  ],
+  "rls": {
+    "read": {
+      "created_by_id": "{{user.id}}"
+    },
+    "create": {
+      "created_by_id": "{{user.id}}"
+    },
+    "update": {
+      "created_by_id": "{{user.id}}"
+    },
+    "delete": {
+      "created_by_id": "{{user.id}}"
+    }
+  }
+}

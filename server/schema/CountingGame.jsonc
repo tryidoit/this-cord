@@ -1,0 +1,54 @@
+{
+  "name": "CountingGame",
+  "type": "object",
+  "properties": {
+    "server_id": {
+      "type": "string"
+    },
+    "channel_id": {
+      "type": "string"
+    },
+    "current_number": {
+      "type": "number",
+      "default": 0
+    },
+    "last_user_id": {
+      "type": "string"
+    },
+    "last_username": {
+      "type": "string"
+    },
+    "high_score": {
+      "type": "number",
+      "default": 0
+    },
+    "high_score_user": {
+      "type": "string"
+    },
+    "high_score_username": {
+      "type": "string"
+    },
+    "broken_count": {
+      "type": "number",
+      "default": 0
+    }
+  },
+  "required": [
+    "server_id",
+    "channel_id"
+  ],
+  "rls": {
+    "read": {},
+    "create": {
+      "created_by_id": "{{user.id}}"
+    },
+    "update": {
+      "created_by_id": "{{user.id}}"
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

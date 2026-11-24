@@ -1,0 +1,54 @@
+{
+  "name": "ChannelOverride",
+  "type": "object",
+  "properties": {
+    "channel_id": {
+      "type": "string"
+    },
+    "role_id": {
+      "type": "string"
+    },
+    "allow": {
+      "type": "number",
+      "default": 0
+    },
+    "deny": {
+      "type": "number",
+      "default": 0
+    }
+  },
+  "required": [
+    "channel_id",
+    "role_id"
+  ],
+  "rls": {
+    "read": {},
+    "create": {
+      "created_by_id": "{{user.id}}"
+    },
+    "update": {
+      "$or": [
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "$or": [
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    }
+  }
+}

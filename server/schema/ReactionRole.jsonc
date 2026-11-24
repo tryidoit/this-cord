@@ -1,0 +1,52 @@
+{
+  "name": "ReactionRole",
+  "type": "object",
+  "properties": {
+    "server_id": {
+      "type": "string"
+    },
+    "channel_id": {
+      "type": "string"
+    },
+    "message_id": {
+      "type": "string"
+    },
+    "emoji": {
+      "type": "string"
+    },
+    "role_id": {
+      "type": "string"
+    },
+    "role_name": {
+      "type": "string"
+    },
+    "enabled": {
+      "type": "boolean",
+      "default": true
+    }
+  },
+  "required": [
+    "server_id",
+    "message_id",
+    "emoji",
+    "role_id"
+  ],
+  "rls": {
+    "read": {},
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

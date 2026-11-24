@@ -1,0 +1,57 @@
+{
+  "name": "ServerAutomation",
+  "type": "object",
+  "properties": {
+    "server_id": {
+      "type": "string"
+    },
+    "feature": {
+      "type": "string",
+      "enum": [
+        "welcome",
+        "leave",
+        "autorole",
+        "starboard",
+        "leveling",
+        "suggestions",
+        "counting",
+        "birthdays",
+        "tickets"
+      ],
+      "default": "welcome"
+    },
+    "enabled": {
+      "type": "boolean",
+      "default": false
+    },
+    "channel_id": {
+      "type": "string"
+    },
+    "config": {
+      "type": "object",
+      "default": {}
+    }
+  },
+  "required": [
+    "server_id",
+    "feature"
+  ],
+  "rls": {
+    "read": {},
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

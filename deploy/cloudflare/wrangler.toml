@@ -1,0 +1,8 @@
+name = "this-cord"
+pages_build_output_dir = "dist"
+compatibility_date = "2025-01-01"
+
+# Set BACKEND_URL (e.g. https://your-backend.example.com) in the Pages dashboard
+# under Settings > Variables and Secrets, or uncomment:
+# [vars]
+# BACKEND_URL = "https://YOUR-BACKEND-HOST.example.com"

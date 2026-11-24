@@ -1,0 +1,53 @@
+{
+  "name": "DeviceBan",
+  "type": "object",
+  "properties": {
+    "device_fingerprint": {
+      "type": "string"
+    },
+    "banned_user_id": {
+      "type": "string"
+    },
+    "banned_username": {
+      "type": "string"
+    },
+    "reason": {
+      "type": "string"
+    },
+    "user_agent": {
+      "type": "string"
+    },
+    "banned_at": {
+      "type": "string"
+    },
+    "active": {
+      "type": "boolean",
+      "default": true
+    }
+  },
+  "required": [
+    "device_fingerprint"
+  ],
+  "rls": {
+    "read": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

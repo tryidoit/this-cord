@@ -1,0 +1,81 @@
+{
+  "name": "ServerCommand",
+  "type": "object",
+  "properties": {
+    "server_id": {
+      "type": "string"
+    },
+    "command_name": {
+      "type": "string"
+    },
+    "description": {
+      "type": "string"
+    },
+    "response_type": {
+      "type": "string",
+      "enum": [
+        "text",
+        "embed",
+        "template"
+      ],
+      "default": "text"
+    },
+    "content": {
+      "type": "string"
+    },
+    "embed_title": {
+      "type": "string"
+    },
+    "embed_description": {
+      "type": "string"
+    },
+    "embed_color": {
+      "type": "string"
+    },
+    "embed_footer": {
+      "type": "string"
+    },
+    "template_vars": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "default": []
+    },
+    "allowed_role_ids": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "default": []
+    },
+    "enabled": {
+      "type": "boolean",
+      "default": true
+    }
+  },
+  "required": [
+    "server_id",
+    "command_name",
+    "response_type",
+    "content"
+  ],
+  "rls": {
+    "read": {},
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

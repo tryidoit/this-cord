@@ -1,0 +1,73 @@
+{
+  "name": "WhiteboardStroke",
+  "type": "object",
+  "properties": {
+    "channel_id": {
+      "type": "string"
+    },
+    "server_id": {
+      "type": "string"
+    },
+    "user_id": {
+      "type": "string"
+    },
+    "username": {
+      "type": "string"
+    },
+    "tool": {
+      "type": "string",
+      "enum": [
+        "pen",
+        "line",
+        "rect",
+        "circle",
+        "text",
+        "eraser"
+      ],
+      "default": "pen"
+    },
+    "color": {
+      "type": "string",
+      "default": "#ffffff"
+    },
+    "size": {
+      "type": "number",
+      "default": 3
+    },
+    "points": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      },
+      "default": []
+    },
+    "text_content": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "channel_id",
+    "user_id"
+  ],
+  "rls": {
+    "read": {},
+    "create": {
+      "created_by_id": "{{user.id}}"
+    },
+    "update": {
+      "created_by_id": "{{user.id}}"
+    },
+    "delete": {
+      "$or": [
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    }
+  }
+}

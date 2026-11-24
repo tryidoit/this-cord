@@ -1,0 +1,120 @@
+{
+  "name": "VoiceRoom",
+  "type": "object",
+  "properties": {
+    "channel_id": {
+      "type": "string"
+    },
+    "server_id": {
+      "type": "string"
+    },
+    "channel_name": {
+      "type": "string"
+    },
+    "user_id": {
+      "type": "string"
+    },
+    "username": {
+      "type": "string"
+    },
+    "display_name": {
+      "type": "string"
+    },
+    "avatar_id": {
+      "type": "string"
+    },
+    "muted": {
+      "type": "boolean",
+      "default": false
+    },
+    "deafened": {
+      "type": "boolean",
+      "default": false
+    },
+    "camera_on": {
+      "type": "boolean",
+      "default": false
+    },
+    "screen_sharing": {
+      "type": "boolean",
+      "default": false
+    },
+    "speaking": {
+      "type": "boolean",
+      "default": false
+    },
+    "is_speaker": {
+      "type": "boolean",
+      "default": false
+    },
+    "hand_raised": {
+      "type": "boolean",
+      "default": false
+    },
+    "connection_quality": {
+      "type": "string",
+      "enum": [
+        "good",
+        "medium",
+        "poor"
+      ],
+      "default": "good"
+    },
+    "priority_speaker": {
+      "type": "boolean",
+      "default": false
+    },
+    "voice_effect": {
+      "type": "string",
+      "default": "none"
+    },
+    "activity_id": {
+      "type": "string"
+    },
+    "joined_at": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "channel_id",
+    "user_id",
+    "username"
+  ],
+  "rls": {
+    "read": null,
+    "create": {
+      "$and": [
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "data.user_id": "{{user.id}}"
+        }
+      ]
+    },
+    "update": {
+      "$or": [
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "$or": [
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    }
+  }
+}

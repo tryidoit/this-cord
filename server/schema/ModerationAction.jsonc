@@ -1,0 +1,66 @@
+{
+  "name": "ModerationAction",
+  "type": "object",
+  "properties": {
+    "server_id": {
+      "type": "string"
+    },
+    "actor_username": {
+      "type": "string"
+    },
+    "target_username": {
+      "type": "string"
+    },
+    "action_type": {
+      "type": "string",
+      "enum": [
+        "warn",
+        "timeout",
+        "purge",
+        "kick",
+        "ban"
+      ]
+    },
+    "reason": {
+      "type": "string"
+    },
+    "duration_minutes": {
+      "type": "number"
+    },
+    "channel_id": {
+      "type": "string"
+    },
+    "message_count": {
+      "type": "number"
+    },
+    "details": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "server_id",
+    "actor_username",
+    "target_username",
+    "action_type"
+  ],
+  "rls": {
+    "read": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "create": {
+      "created_by_id": "{{user.id}}"
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

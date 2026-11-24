@@ -1,0 +1,105 @@
+{
+  "name": "Call",
+  "type": "object",
+  "properties": {
+    "kind": {
+      "type": "string",
+      "enum": [
+        "voice",
+        "video"
+      ],
+      "default": "voice"
+    },
+    "caller_id": {
+      "type": "string"
+    },
+    "caller_username": {
+      "type": "string"
+    },
+    "caller_name": {
+      "type": "string"
+    },
+    "caller_avatar": {
+      "type": "string"
+    },
+    "callee_id": {
+      "type": "string"
+    },
+    "callee_username": {
+      "type": "string"
+    },
+    "callee_name": {
+      "type": "string"
+    },
+    "callee_avatar": {
+      "type": "string"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "ringing",
+        "active",
+        "declined",
+        "ended",
+        "missed"
+      ],
+      "default": "ringing"
+    },
+    "is_group": {
+      "type": "boolean",
+      "default": false
+    },
+    "group_id": {
+      "type": "string"
+    },
+    "callee_ids": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "default": []
+    }
+  },
+  "required": [
+    "kind",
+    "caller_id"
+  ],
+  "rls": {
+    "create": {
+      "$and": [
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "data.caller_id": "{{user.id}}"
+        }
+      ]
+    },
+    "read": {
+      "$or": [
+        {
+          "data.caller_id": "{{user.id}}"
+        },
+        {
+          "data.callee_id": "{{user.id}}"
+        },
+        {
+          "data.callee_ids": "{{user.id}}"
+        }
+      ]
+    },
+    "update": {
+      "$or": [
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "data.callee_id": "{{user.id}}"
+        }
+      ]
+    },
+    "delete": {
+      "created_by_id": "{{user.id}}"
+    }
+  }
+}

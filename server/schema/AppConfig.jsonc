@@ -1,0 +1,75 @@
+{
+  "name": "AppConfig",
+  "type": "object",
+  "properties": {
+    "key": {
+      "type": "string",
+      "default": "global"
+    },
+    "double_points": {
+      "type": "boolean",
+      "default": false
+    },
+    "welcome_message": {
+      "type": "string"
+    },
+    "owner_username": {
+      "type": "string"
+    },
+    "global_transfer_limit": {
+      "type": "number",
+      "default": 50000
+    },
+    "maintenance_mode": {
+      "type": "boolean",
+      "default": false
+    },
+    "maintenance_message": {
+      "type": "string"
+    },
+    "turn_urls": {
+      "type": "string"
+    },
+    "turn_username": {
+      "type": "string"
+    },
+    "turn_credential": {
+      "type": "string",
+      "rls": {
+        "read": {
+          "$or": [
+            {
+              "created_by_id": "{{user.id}}"
+            },
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            }
+          ]
+        }
+      }
+    }
+  },
+  "required": [
+    "key"
+  ],
+  "rls": {
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "read": null,
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

@@ -1,0 +1,96 @@
+{
+  "name": "Tournament",
+  "type": "object",
+  "properties": {
+    "server_id": {
+      "type": "string"
+    },
+    "game_name": {
+      "type": "string"
+    },
+    "title": {
+      "type": "string"
+    },
+    "description": {
+      "type": "string"
+    },
+    "entry_fee": {
+      "type": "number",
+      "default": 0
+    },
+    "prize_pool": {
+      "type": "number",
+      "default": 0
+    },
+    "max_participants": {
+      "type": "number",
+      "default": 8
+    },
+    "participant_user_ids": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "default": []
+    },
+    "participant_usernames": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "default": []
+    },
+    "bracket": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      },
+      "default": []
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "open",
+        "in_progress",
+        "completed"
+      ],
+      "default": "open"
+    },
+    "winner_username": {
+      "type": "string"
+    },
+    "starts_at": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "server_id",
+    "title",
+    "game_name"
+  ],
+  "rls": {
+    "read": {},
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "update": {
+      "$or": [
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

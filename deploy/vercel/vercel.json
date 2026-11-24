@@ -1,0 +1,11 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "buildCommand": "npm run build",
+  "outputDirectory": "dist",
+  "installCommand": "npm install --legacy-peer-deps",
+  "rewrites": [
+    { "source": "/api/:path*", "destination": "https://YOUR-BACKEND-HOST.example.com/api/:path*" },
+    { "source": "/healthz", "destination": "https://YOUR-BACKEND-HOST.example.com/healthz" },
+    { "source": "/((?!assets/).*)", "destination": "/index.html" }
+  ]
+}

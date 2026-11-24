@@ -1,0 +1,70 @@
+{
+  "name": "CallSignal",
+  "type": "object",
+  "properties": {
+    "call_key": {
+      "type": "string"
+    },
+    "from_id": {
+      "type": "string"
+    },
+    "to_id": {
+      "type": "string"
+    },
+    "kind": {
+      "type": "string",
+      "enum": [
+        "offer",
+        "answer",
+        "ice",
+        "bye",
+        "state",
+        "frame",
+        "audio",
+        "ping",
+        "join",
+        "leave",
+        "stage",
+        "soundboard",
+        "activity"
+      ]
+    },
+    "payload": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "call_key",
+    "from_id",
+    "to_id",
+    "kind"
+  ],
+  "rls": {
+    "create": {
+      "$and": [
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "data.from_id": "{{user.id}}"
+        }
+      ]
+    },
+    "read": {
+      "$or": [
+        {
+          "data.from_id": "{{user.id}}"
+        },
+        {
+          "data.to_id": "{{user.id}}"
+        }
+      ]
+    },
+    "update": {
+      "created_by_id": "{{user.id}}"
+    },
+    "delete": {
+      "created_by_id": "{{user.id}}"
+    }
+  }
+}

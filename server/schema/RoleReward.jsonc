@@ -1,0 +1,41 @@
+{
+  "name": "RoleReward",
+  "type": "object",
+  "properties": {
+    "server_id": {
+      "type": "string"
+    },
+    "level_required": {
+      "type": "number"
+    },
+    "role_id": {
+      "type": "string"
+    },
+    "role_name": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "server_id",
+    "level_required",
+    "role_id"
+  ],
+  "rls": {
+    "read": {},
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

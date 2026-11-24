@@ -1,0 +1,64 @@
+{
+  "name": "RoleShopItem",
+  "type": "object",
+  "properties": {
+    "server_id": {
+      "type": "string"
+    },
+    "role_id": {
+      "type": "string"
+    },
+    "role_name": {
+      "type": "string"
+    },
+    "role_color": {
+      "type": "string"
+    },
+    "price": {
+      "type": "number",
+      "default": 100
+    },
+    "description": {
+      "type": "string"
+    },
+    "duration_days": {
+      "type": "number",
+      "default": 0
+    },
+    "purchaser_user_ids": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "default": []
+    },
+    "enabled": {
+      "type": "boolean",
+      "default": true
+    }
+  },
+  "required": [
+    "server_id",
+    "role_id",
+    "role_name",
+    "price"
+  ],
+  "rls": {
+    "read": {},
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

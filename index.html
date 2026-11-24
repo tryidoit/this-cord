@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/icon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#313338" />
+    <meta name="description" content="BetterThisCord — servers, DMs, animated avatars, coin rewards, voice & video calls, and a 3D arcade." />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="manifest" href="/manifest.json" />
+    <title>BetterThisCord</title>
+    <script>
+      (function () {
+        try {
+          var mode = localStorage.getItem("tc_ui_mode") || "system";
+          var styleId = localStorage.getItem("tc_ui_style") || "discord";
+          var vars = localStorage.getItem("tc_ui_vars");
+          var fontUrl = localStorage.getItem("tc_ui_font_url");
+          var isDark =
+            mode === "dark" ||
+            (mode === "system" &&
+              window.matchMedia("(prefers-color-scheme: dark)").matches);
+          var root = document.documentElement;
+          if (isDark) root.classList.add("dark");
+          root.setAttribute("data-ui-style", styleId);
+          if (vars) {
+            var parsed = JSON.parse(vars);
+            for (var key in parsed) {
+              if (Object.prototype.hasOwnProperty.call(parsed, key)) {
+                root.style.setProperty(key, parsed[key]);
+              }
+            }
+          }
+          if (fontUrl) {
+            var link = document.createElement("link");
+            link.rel = "stylesheet";
+            link.href = fontUrl;
+            document.head.appendChild(link);
+          }
+        } catch (e) {}
+      })();
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
+</html>
