@@ -4,6 +4,7 @@ import path from 'node:path'
 
 // Dev: run `npm run server` (API on :3000) and `npm run dev` (Vite on :5173, proxies /api).
 export default defineConfig({
+  base: './', // relative asset URLs: works under https://<user>.github.io/<repo>/
   plugins: [react()],
   resolve: { alias: { '@': path.resolve(import.meta.dirname, 'src') } },
   build: {

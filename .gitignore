@@ -39,3 +39,7 @@ dist-ssr
 base44/.app.jsonc
 data/
 .env
+
+# build output / deps
+node_modules
+dist

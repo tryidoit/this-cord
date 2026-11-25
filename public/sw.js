@@ -2,11 +2,11 @@
 // Caches static assets (JS, CSS, fonts) and serves them cache-first when offline.
 // Does NOT cache API responses — those always go to the network.
 
-const CACHE_NAME = "betterthiscord-v1";
+const CACHE_NAME = "betterthiscord-pages-v1";
 const STATIC_ASSETS = [
-  "/",
-  "/index.html",
-  "/manifest.json",
+  "./",
+  "./index.html",
+  "./manifest.json",
 ];
 
 self.addEventListener("install", (event) => {
@@ -32,7 +32,6 @@ self.addEventListener("fetch", (event) => {
   if (event.request.method !== "GET") return;
 
   // Never cache API calls — always go to network
-  if (url.pathname.startsWith("/api/")) return;
 
   // For static assets (JS, CSS, fonts, images), use cache-first
   if (event.request.destination === "script" || event.request.destination === "style" || event.request.destination === "font" || event.request.destination === "image") {
@@ -54,7 +53,7 @@ self.addEventListener("fetch", (event) => {
   // For navigation requests, try network first, fall back to cached index.html
   if (event.request.mode === "navigate") {
     event.respondWith(
-      fetch(event.request).catch(() => caches.match("/index.html"))
+      fetch(event.request).catch(() => caches.match("./index.html"))
     );
     return;
   }

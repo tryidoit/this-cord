@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { hardNavigate } from "@/lib/nav";
 import { Link } from "react-router-dom";
 import { api } from "@/api/client";
 import { Button } from "@/components/ui/button";
@@ -23,7 +24,7 @@ export default function Login() {
     setLoading(true);
     try {
       await api.auth.login(identifier.trim(), password);
-      window.location.href = returnTo;
+      hardNavigate(returnTo);
     } catch (err) {
       setError(err.message || "Invalid username or password");
     } finally {

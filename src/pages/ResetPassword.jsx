@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { hardNavigate } from "@/lib/nav";
 import { Link, useSearchParams } from "react-router-dom";
 import { api } from "@/api/client";
 import { Button } from "@/components/ui/button";
@@ -26,7 +27,7 @@ export default function ResetPassword() {
     setLoading(true);
     try {
       await api.auth.resetPassword(resetToken, newPassword);
-      window.location.href = "/";
+      hardNavigate("/");
     } catch (err) {
       setError(err.message || "Failed to reset password");
     } finally {

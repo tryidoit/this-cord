@@ -1,47 +1,33 @@
 // Tiny API client for the This-Cord server (see /server). Same-origin, cookie-session auth.
 import { deviceHeaders, initDeviceSignals } from "@/lib/deviceId";
+import { handle, onEvent, prune } from "@/local/router";
 
-const BASE = "/api";
+// GitHub Pages build: there is no server. Every call below is answered by src/local (SQLite in the browser).
 const ready = initDeviceSignals().catch(() => {});
 
 async function request(method, path, body) {
-  let res;
   await ready;
   try {
-    res = await fetch(BASE + path, {
-      method,
-      credentials: "same-origin",
-      headers: { "Content-Type": "application/json", "X-TC-Client": "1", ...deviceHeaders() },
-      body: body === undefined ? undefined : JSON.stringify(body),
-    });
+    return await handle(method, path, body === undefined ? undefined : JSON.parse(JSON.stringify(body)), deviceHeaders());
   } catch (e) {
-    const err = new Error("Network error — check your connection.");
-    err.status = 0; err.cause = e; throw err;
-  }
-  let data = null;
-  try { data = await res.json(); } catch { /* empty body */ }
-  if (!res.ok) {
-    const err = new Error(data?.error || `Request failed (${res.status})`);
-    err.status = res.status; err.data = data; err.code = data?.code;
-    if (res.status === 403 && data?.code === "device_banned") window.dispatchEvent(new CustomEvent("tc:device-banned", { detail: data }));
+    const err = new Error(e.status ? e.message : "Local storage error: " + (e.message || e));
+    err.status = e.status || 500; err.code = e.code; err.data = { error: e.message, code: e.code, reason: e.reason };
+    if (err.status === 403 && e.code === "device_banned") window.dispatchEvent(new CustomEvent("tc:device-banned", { detail: err.data }));
     throw err;
   }
-  return data;
 }
+prune();
 
-// ---------- live updates: one shared SSE connection ----------
+// ---------- live updates: in-tab + cross-tab events from the local engine ----------
 const subs = new Map(); // entity -> Set<cb>
-let source = null;
+let unlisten = null;
 function ensureStream() {
-  if (source || typeof EventSource === "undefined") return;
-  source = new EventSource(BASE + "/stream");
-  source.onmessage = (m) => {
-    let evt; try { evt = JSON.parse(m.data); } catch { return; }
+  if (unlisten) return;
+  unlisten = onEvent((evt) => {
     for (const cb of subs.get(evt.entity) || []) { try { cb({ type: evt.type, id: evt.id, data: evt.data }); } catch (e) { console.error(e); } }
-  };
-  source.onerror = () => { /* EventSource reconnects by itself */ };
+  });
 }
-export function closeStream() { source?.close(); source = null; }
+export function closeStream() { unlisten?.(); unlisten = null; }
 
 function entity(name) {
   const e = encodeURIComponent(name);
@@ -80,7 +66,7 @@ export const api = {
     logout: async () => { closeStream(); await request("POST", "/auth/logout", {}).catch(() => {}); },
     usernameAvailable: (u) => request("GET", `/auth/username-available?u=${encodeURIComponent(u)}`).then((r) => r.available),
     deviceStatus: () => request("GET", "/auth/device-status"),
-    forgotPassword: (email) => request("POST", "/auth/forgot", { email }),
+    forgotPassword: (email) => request("POST", "/auth/forgot", { email }), // static build: resolves { ok, link? } (no email is sent)
     resetPassword: (token, newPassword) => request("POST", "/auth/reset", { token, newPassword }),
     changePassword: (currentPassword, newPassword) => request("POST", "/auth/change-password", { currentPassword, newPassword }),
     logoutEverywhere: () => request("POST", "/auth/logout-everywhere", {}),

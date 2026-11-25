@@ -11,12 +11,14 @@ export default function ForgotPassword() {
   const [email, setEmail] = useState("");
   const [loading, setLoading] = useState(false);
   const [sent, setSent] = useState(false);
+  const [link, setLink] = useState(null);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
     try {
-      await api.auth.forgotPassword(email);
+      const r = await api.auth.forgotPassword(email);
+      setLink(r?.link || null);
     } catch {
       // Always show success regardless
     } finally {
@@ -37,9 +39,12 @@ export default function ForgotPassword() {
       }
     >
       {sent ? (
-        <p className="text-sm text-foreground text-center">
-          If an account exists with that email, you'll receive a password reset link shortly.
-        </p>
+        <div className="space-y-3 text-center">
+          <p className="text-sm text-foreground">
+            {link ? "This demo has no mail server, so here is your reset link:" : "No account was found for that email on this browser."}
+          </p>
+          {link && <a href={link} className="block break-all text-sm text-primary underline" onClick={() => setTimeout(() => window.location.reload(), 50)}>Open reset link</a>}
+        </div>
       ) : (
         <form onSubmit={handleSubmit} className="space-y-4">
           <div className="space-y-2">

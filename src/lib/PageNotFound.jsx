@@ -1,4 +1,5 @@
 import { useLocation } from 'react-router-dom';
+import { hardNavigate } from "@/lib/nav";
 import { api } from '@/api/client';
 import { useQuery } from '@tanstack/react-query';
 
@@ -59,7 +60,7 @@ export default function PageNotFound() {
                     {/* Action Button */}
                     <div className="pt-6">
                         <button 
-                            onClick={() => window.location.href = '/'} 
+                            onClick={() => hardNavigate('/')} 
                             className="inline-flex items-center px-4 py-2 text-sm font-medium text-foreground bg-card border border-border rounded-lg hover:bg-background hover:border-border transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-ring"
                         >
                             <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">

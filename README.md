@@ -1,19 +1,35 @@
-# This-Cord
+# BetterThisCord (GitHub Pages edition)
 
-Discord-style chat app: React + Vite front end, Node (Express + built-in SQLite) back end. No third-party backend.
+Discord-style chat app: React + Vite. **This branch runs entirely in the browser** so it can be hosted on GitHub Pages:
+the Node/Express/SQLite server was ported to `src/local/` and runs inside the page (SQLite compiled to WebAssembly via
+`sql.js`, saved to IndexedDB). The UI, access rules (`server/schema/*.jsonc`) and the coin economy are the same code paths as before.
 
-## Run it
-Needs Node 22.13+.
+Live: https://tryidoit.github.io/this-cord/
 
+## What that means
+- Data is **private to each browser** (IndexedDB). There is no shared server, so other people's devices never see your messages.
+- Two tabs of the same browser share one database and get live updates through `BroadcastChannel`. Each tab keeps its own
+  login, so open a second tab, register another account, and you can chat/DM/friend between the two.
+- The first account created in a browser becomes admin, as before.
+- No email: "Forgot password" shows the reset link on the page instead of sending it.
+- Voice/video calls and anything else that needs two real devices to reach each other will not connect across devices.
+- Clearing site data deletes everything.
+
+## Develop
 ```bash
-npm install
-npm run build
-npm start            # http://localhost:3000  (serves the built app + API)
+npm install --legacy-peer-deps
+npm run dev      # http://localhost:5173  (no server needed)
+npm run build    # static site in dist/
 ```
+Routes use the URL hash (`#/login`) because GitHub Pages cannot rewrite paths. Pushing to `main` deploys via
+`.github/workflows/pages.yml`.
 
-Development: `npm run server` in one terminal, `npm run dev` in another (Vite proxies `/api`).
+## Full-stack version
+The original Node server version (alwaysdata / Oracle / Vercel / Cloudflare deploy configs) lives on the
+`server-version` branch.
 
-Tests (boots a throwaway server and attacks it): `npm test`
+---
+Notes below describe the original server and still apply to that branch.
 
 ## Configuration (environment variables)
 | Variable | Purpose |

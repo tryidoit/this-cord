@@ -1,4 +1,5 @@
 import React, { createContext, useState, useContext, useEffect, useCallback } from 'react';
+import { hardNavigate, currentRoute } from "@/lib/nav";
 import { api } from '@/api/client';
 
 const AuthContext = createContext();
@@ -34,12 +35,12 @@ export const AuthProvider = ({ children }) => {
     await api.auth.logout();
     setUser(null);
     setIsAuthenticated(false);
-    if (shouldRedirect) window.location.href = '/login';
+    if (shouldRedirect) hardNavigate('/login');
   };
 
   const navigateToLogin = () => {
-    const here = window.location.pathname + window.location.search;
-    window.location.href = '/login' + (here !== '/' ? '?returnTo=' + encodeURIComponent(here) : '');
+    const here = currentRoute();
+    hardNavigate('/login' + (here !== '/' ? '?returnTo=' + encodeURIComponent(here) : ''));
   };
 
   return (

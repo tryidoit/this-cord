@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { hardNavigate } from "@/lib/nav";
 import { Link } from "react-router-dom";
 import { api } from "@/api/client";
 import { Button } from "@/components/ui/button";
@@ -36,7 +37,7 @@ export default function Register() {
     setLoading(true);
     try {
       await api.auth.register({ email, password, username: handle });
-      window.location.href = safeReturnTo();
+      hardNavigate(safeReturnTo());
     } catch (err) {
       setError(err.message || "Registration failed");
     } finally {

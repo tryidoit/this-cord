@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { hardNavigate } from "@/lib/nav";
 import { Coins, Settings2, LogOut, Timer } from "lucide-react";
 import ProfileAvatar from "@/components/thiscord/ProfileAvatar";
 import { formatPoints, minutesUntilSessionReward, isInfinite, hasCheat } from "@/lib/economy";
@@ -21,7 +22,7 @@ export default function UserPanel({ profile, onOpenProfile }) {
 
   const logout = async () => {
     await api.auth.logout();
-    window.location.href = "/login";
+    hardNavigate("/login");
   };
 
   return (

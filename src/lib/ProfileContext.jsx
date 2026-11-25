@@ -1,4 +1,5 @@
 import React, { createContext, useCallback, useContext, useEffect, useRef, useState } from "react";
+import { hardNavigate } from "@/lib/nav";
 import { Outlet } from "react-router-dom";
 import { api } from "@/api/client";
 import { SESSION_REWARD_MINUTES, canClaimDaily } from "@/lib/economy";
@@ -98,7 +99,7 @@ export function ProfileProvider({ children }) {
         // If auth itself failed, send the user to login instead of rendering
         // the app with no profile (which loses their handle).
         if (err?.status === 401) {
-          window.location.href = "/login";
+          hardNavigate("/login");
           return;
         }
         if (err?.code === "device_banned") setDeviceBanned({ reason: err.data?.reason });
@@ -203,7 +204,7 @@ export function ProfileProvider({ children }) {
 
   const logout = async () => {
     await api.auth.logout();
-    window.location.href = "/login";
+    hardNavigate("/login");
   };
 
   if (loading) return <BrandLoader label="loading your profile" />;

@@ -2,14 +2,14 @@
   "name": "BetterThisCord",
   "short_name": "ThisCord",
   "description": "Servers, DMs, voice & video calls, animated avatars, and a 3D arcade.",
-  "start_url": "/",
+  "start_url": "./",
   "display": "standalone",
   "orientation": "any",
   "theme_color": "#313338",
   "background_color": "#313338",
   "icons": [
     {
-      "src": "/icon.svg",
+      "src": "icon.svg",
       "sizes": "any",
       "type": "image/svg+xml",
       "purpose": "any maskable"
